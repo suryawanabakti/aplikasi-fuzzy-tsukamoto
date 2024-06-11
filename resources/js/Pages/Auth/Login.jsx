@@ -33,7 +33,7 @@ export default function Login({ status, canResetPassword }) {
                 </div>
             )}
             <div className="row g-0 flex-fill">
-                <div className="col-12 col-lg-6 col-xl-4 border-top-wide border-primary d-flex flex-column justify-content-center">
+                <div className="col-12 col-lg-6 col-xl-4 border-top-wide border-danger d-flex flex-column justify-content-center">
                     <div className="container container-tight my-5 px-lg-5">
                         <div className="text-center mb-4">
                             <Link
@@ -129,7 +129,7 @@ export default function Login({ status, canResetPassword }) {
                             <div className="form-footer">
                                 <button
                                     type="submit"
-                                    className={`btn btn-primary w-100 ${
+                                    className={`btn btn-danger w-100 ${
                                         processing ? "btn-loading" : ""
                                     }`}
                                 >
@@ -138,10 +138,7 @@ export default function Login({ status, canResetPassword }) {
                             </div>
                         </form>
                         <div className="text-center text-muted mt-3">
-                            Don't have account yet?
-                            <a href="/register" tabIndex={-1}>
-                                Sign up
-                            </a>
+                            Made with 🍐 by Lisawati.
                         </div>
                     </div>
                 </div>
@@ -151,7 +148,7 @@ export default function Login({ status, canResetPassword }) {
                         className="bg-cover h-100 min-vh-100"
                         style={{
                             backgroundImage:
-                                "url(./static/photos/finances-us-dollars-and-bitcoins-currency-money-2.jpg)",
+                                "url(https://images.pexels.com/photos/5529950/pexels-photo-5529950.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
                         }}
                     />
                 </div>
