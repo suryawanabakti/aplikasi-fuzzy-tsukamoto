@@ -32,7 +32,7 @@ export default function Perhitungan({ auth }) {
                                 Luas Lahan (m<sup>2</sup>)
                             </label>
                             <input
-                                type="number"
+                                type="text"
                                 className="form-control"
                                 placeholder="Masukkan luas lahan..."
                                 defaultValue={data.luas_lahan}
@@ -71,7 +71,13 @@ export default function Perhitungan({ auth }) {
                         </div>
                     </div>
                     <div className="card-footer">
-                        <button className="btn btn-danger">Submit</button>
+                        <button
+                            className={`btn btn-danger ${
+                                processing && "btn-loading"
+                            }`}
+                        >
+                            Submit
+                        </button>
                     </div>
                 </form>
             </div>

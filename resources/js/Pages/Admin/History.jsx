@@ -14,9 +14,10 @@ export default function Riwayat({ auth, perhitungan }) {
                     <h4 className="card-title">Riwayat</h4>
                 </div>
                 <div className="card-body">
-                    <table className="table table-striped table-hover">
+                    <table className="table table-striped table-hover table-vcenter">
                         <thead>
                             <tr>
+                                <th>Tanggal</th>
                                 <th>Luas Lahan</th>
                                 <th>Bibit</th>
                                 <th>Pupuk</th>
@@ -28,6 +29,7 @@ export default function Riwayat({ auth, perhitungan }) {
                             {perhitungan.map((data) => {
                                 return (
                                     <tr key={data.id}>
+                                        <td>{data.created_at}</td>
                                         <td>
                                             {data.luas_lahan}m<sup>2</sup>.
                                         </td>
@@ -36,6 +38,7 @@ export default function Riwayat({ auth, perhitungan }) {
                                         <td>{data.hasil}kg.</td>
                                         <td className="d-flex gap-2">
                                             <Link
+                                                className="btn btn-icon btn-info"
                                                 href={route(
                                                     "riwayat.show",
                                                     data.id
@@ -48,6 +51,7 @@ export default function Riwayat({ auth, perhitungan }) {
                                                     "riwayat.destroy",
                                                     data.id
                                                 )}
+                                                className="btn btn-danger btn-icon"
                                                 as="button"
                                                 method="delete"
                                                 onSuccess={() =>
