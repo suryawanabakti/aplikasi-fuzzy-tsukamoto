@@ -11,6 +11,7 @@ import {
     IconSearch,
 } from "@tabler/icons-react";
 import NavLinkAdmin from "./NavLinkAdmin";
+import NavLinkPetani from "./NavLinkPetani";
 
 export default function Navigation({ user }) {
     const [notifications, setNotifcations] = useState([]);
@@ -88,7 +89,10 @@ export default function Navigation({ user }) {
                         <span className="navbar-toggler-icon" />
                     </button>
                     <h1 className="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-                        <Link href="/">Terong Belanda </Link>
+                        <Link href="/" className="fw-bolder">
+                            PREDIKSI HASIL PANEN{" "}
+                            <span className="text-danger">TERONG BELANDA</span>
+                        </Link>
                     </h1>
                     <div className="navbar-nav flex-row order-md-last">
                         <div className="d-none d-md-flex">
@@ -262,7 +266,11 @@ export default function Navigation({ user }) {
                 >
                     <div className="navbar">
                         <div className="container-xl">
-                            <NavLinkAdmin />
+                            {user.roles[0].name == "admin" && <NavLinkAdmin />}
+                            {user.roles[0].name == "petani" && (
+                                <NavLinkPetani />
+                            )}
+
                             <div className="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last"></div>
                         </div>
                     </div>

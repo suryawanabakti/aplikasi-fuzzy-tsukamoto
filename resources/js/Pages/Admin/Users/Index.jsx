@@ -31,7 +31,7 @@ export default function Index({ auth, users, search }) {
         <div className="row g-2 align-items-center">
             <FlashMessage flash={flash} show={show} setShow={setShow} />
             <div className="col">
-                <h2 className="page-title">Users</h2>
+                <h2 className="page-title">Petani</h2>
                 <div className="text-muted mt-1">
                     {users.meta.from}-{users.meta.to} of {users.meta.total}{" "}
                     people

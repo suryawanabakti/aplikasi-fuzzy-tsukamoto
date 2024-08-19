@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('updated_at', 'desc');
+        $users = User::orderBy('updated_at', 'desc')->role('petani');
         if (request('search')) {
             $users->where('name', 'LIKE', '%' . request('search') . '%');
         }
@@ -91,11 +91,11 @@ class UserController extends Controller
         if ($request->photo) {
             $data['photo'] = $request->file('photo')->store('photo');
         }
-        User::create($data)->assignRole("user");
+        User::create($data)->assignRole("petani");
 
         return redirect()->route('admin.users.index')->with([
             "message" => [
-                "label" => "Berhasil tambah ➕ user " . $request->name,
+                "label" => "Berhasil tambah ➕ petani " . $request->name,
                 "type" => "success",
             ],
         ]);;

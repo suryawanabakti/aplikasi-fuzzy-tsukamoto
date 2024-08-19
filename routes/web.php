@@ -35,21 +35,16 @@ Route::get('/send-notification', function () {
     return redirect('/dashboard')->with('success', 'Gagal memberikan notifikasi');
 });
 
-Route::get('/login-sso', function () {
-    $user =  Authenticated::authenticate(request('token'), request('sso_token'), request('app_name'));
-    Auth::login($user);
-    // Kondisi Jika Ada cth:  if role === admin redirect :
-    return redirect('/dashboard');
-});
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/rules', [RuleController::class, 'index'])->name('rules.index');
+
     Route::get('/perhitungan', [PerhitunganController::class, 'index'])->name('perhitungan.index');
     Route::post('/perhitungan', [PerhitunganController::class, 'store'])->name('perhitungan.store');
+
     Route::get('/history', [HistoryController::class, 'index'])->name('riwayat.index');
     Route::get('/history/{perhitungan}', [HistoryController::class, 'show'])->name('riwayat.show');
     Route::delete('/history/{perhitungan}', [HistoryController::class, 'destroy'])->name('riwayat.destroy');
@@ -58,6 +53,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('users', UserController::class)->names("admin.users");
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

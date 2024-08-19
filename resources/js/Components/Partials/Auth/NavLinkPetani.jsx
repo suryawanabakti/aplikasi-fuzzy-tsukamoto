@@ -8,7 +8,7 @@ import {
     IconUsers,
 } from "@tabler/icons-react";
 
-export default function NavLinkAdmin() {
+export default function NavLinkPetani() {
     return (
         <ul className="navbar-nav">
             <li
@@ -23,26 +23,7 @@ export default function NavLinkAdmin() {
                     <span className="nav-link-title">Home</span>
                 </Link>
             </li>
-            <li
-                className={`nav-item ${
-                    route().current("admin.users*") && "active"
-                }`}
-            >
-                <Link className="nav-link" href={route("admin.users.index")}>
-                    <span className="nav-link-icon d-md-none d-lg-inline-block">
-                        <IconUsers className="icon" />
-                    </span>
-                    <span className="nav-link-title">Petani</span>
-                </Link>
-            </li>
-            <li className={`nav-item ${route().current("rules*") && "active"}`}>
-                <Link className="nav-link" href={route("rules.index")}>
-                    <span className="nav-link-icon d-md-none d-lg-inline-block">
-                        <IconList className="icon" />
-                    </span>
-                    <span className="nav-link-title">Rules</span>
-                </Link>
-            </li>
+
             <li
                 className={`nav-item ${
                     route().current("perhitungan*") && "active"
