@@ -31,11 +31,18 @@ export default function Riwayat({ auth, perhitungan }) {
                                     <tr key={data.id}>
                                         <td>{data.created_at}</td>
                                         <td>
-                                            {data.luas_lahan}m<sup>2</sup>.
+                                            {data.luas_lahan}m<sup>2</sup> /{" "}
+                                            {data.luas_lahan / 10000} Hektar
                                         </td>
-                                        <td>{data.bibit}kg.</td>
-                                        <td>{data.pupuk}kg.</td>
-                                        <td>{data.hasil}kg.</td>
+                                        <td>
+                                            {data.bibit}kg. /{" "}
+                                            {data.bibit * 1000} gram
+                                        </td>
+                                        <td>
+                                            {data.pupuk}kg. /{" "}
+                                            {data.pupuk * 1000} gram
+                                        </td>
+                                        <td>{data.hasil}kg</td>
                                         <td className="d-flex gap-2">
                                             <Link
                                                 className="btn btn-icon btn-info"

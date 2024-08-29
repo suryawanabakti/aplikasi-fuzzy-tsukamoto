@@ -147,8 +147,7 @@ export default function Login({ status, canResetPassword }) {
                     <div
                         className="bg-cover h-100 min-vh-100"
                         style={{
-                            backgroundImage:
-                                "url(https://images.pexels.com/photos/5529950/pexels-photo-5529950.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
+                            backgroundImage: "url(/terongbelanda.jpg)",
                         }}
                     />
                 </div>

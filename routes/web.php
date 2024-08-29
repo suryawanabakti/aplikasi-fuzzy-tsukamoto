@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\DataPanenController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PerhitunganController;
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('users', UserController::class)->names("admin.users");
+    Route::resource('data-panen', DataPanenController::class)->names("admin.data-panen");
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

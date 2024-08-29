@@ -5,6 +5,7 @@ import {
     IconHome,
     IconList,
     IconListNumbers,
+    IconTree,
     IconUsers,
 } from "@tabler/icons-react";
 
@@ -33,6 +34,21 @@ export default function NavLinkAdmin() {
                         <IconUsers className="icon" />
                     </span>
                     <span className="nav-link-title">Petani</span>
+                </Link>
+            </li>
+            <li
+                className={`nav-item ${
+                    route().current("admin.data-panen*") && "active"
+                }`}
+            >
+                <Link
+                    className="nav-link"
+                    href={route("admin.data-panen.index")}
+                >
+                    <span className="nav-link-icon d-md-none d-lg-inline-block">
+                        <IconTree className="icon" />
+                    </span>
+                    <span className="nav-link-title">Data Panen</span>
                 </Link>
             </li>
             <li className={`nav-item ${route().current("rules*") && "active"}`}>

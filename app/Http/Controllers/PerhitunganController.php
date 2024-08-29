@@ -11,7 +11,7 @@ class PerhitunganController extends Controller
     {
         return inertia("Admin/Perhitungan");
     }
-    public function store(Request $request)
+    public function store4(Request $request)
     {
         // Diketahui : 
         $luasLahanTertinggi = 27;
@@ -38,15 +38,7 @@ class PerhitunganController extends Controller
         $derajatPupukTerkecil = round(($pupukTertinggi - $request->pupuk) / ($pupukTertinggi - $pupukTerkecil), 2);
         $derajatPupukTertinggi = round(($request->pupuk - $pupukTerkecil) / ($pupukTertinggi - $pupukTerkecil), 2);
 
-        // Produksi berkurang
-        // return [
-        //     "derajatLahanTerkecil" => $derajatLahanTerkecil,
-        //     "derajatLahanTertinggi" => $derajatLahanTertinggi,
-        //     "derajatBibitTerkecil" => $derajatBibitTerkecil,
-        //     "derajatBibitTertinggi" => $derajatBibitTertinggi,
-        //     "derajatPupukTerkecil" => $derajatPupukTerkecil,
-        //     "derajatPupukTertinggi" => $derajatPupukTertinggi,
-        // ];
+
 
         $a1 = min($derajatLahanTerkecil, $derajatBibitTerkecil, $derajatPupukTerkecil);
         $z1 = round($produksiTertinggi - ($a1 * ($produksiTertinggi - $produksiTerkecil)), 2);
@@ -156,17 +148,40 @@ class PerhitunganController extends Controller
         Perhitungan::create($data);
         return redirect(route("riwayat.index"));
     }
-    public function store2(Request $request)
+    public function store2(Request $request) {}
+    public function store(Request $request)
     {
+
         // Diketahui : 
-        $luasLahanTertinggi = 27;
-        $luasLahanTerkecil = 14;
+        $luasLahanTertinggi = $request->luas_lahan_terbesar;
+        $luasLahanTerkecil = $request->luas_lahan_terkecil;
 
-        $bibitTertinggi = 5;
-        $bibitTerkecil = 2;
 
-        $pupukTertinggi = 10;
-        $pupukTerkecil = 3;
+        $bibitTertinggi = $request->bibit_terbanyak;
+        $bibitTerkecil = $request->bibit_terkecil;
+
+        $pupukTertinggi = $request->pupuk_terbanyak;
+        $pupukTerkecil = $request->pupuk_terkecil;
+
+        if ($request->p_luas_lahan == 1) {
+            $luasLahanTertinggi = $luasLahanTertinggi * 10000;
+            $luasLahanTerkecil = $luasLahanTerkecil * 10000;
+            $request['luas_lahan'] = $request->luas_lahan * 10000;
+        }
+
+        if ($request->p_bibit == 2) {
+            $bibitTertinggi = $bibitTertinggi / 1000;
+            $bibitTerkecil = $bibitTerkecil / 1000;
+            $request['bibit'] = $request->bibit / 1000;
+        }
+
+        if ($request->p_pupuk == 2) {
+            $pupukTertinggi = $pupukTertinggi / 1000;
+            $pupukTerkecil = $pupukTerkecil / 1000;
+            $request['pupuk'] = $request->pupuk / 1000;
+        }
+
+
 
         $produksiTertinggi = 261;
         $produksiTerkecil = 81;

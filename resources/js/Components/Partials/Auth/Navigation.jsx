@@ -114,87 +114,6 @@ export default function Navigation({ user }) {
                             >
                                 <IconSun className="icon" />
                             </a>
-                            <div className="nav-item dropdown d-none d-md-flex me-3">
-                                <a
-                                    href="#"
-                                    className="nav-link px-0"
-                                    data-bs-toggle="dropdown"
-                                    tabIndex={-1}
-                                    aria-label="Show notifications"
-                                >
-                                    <IconBell className="icon" />
-                                    <span className="badge bg-red" />
-                                </a>
-                                <div className="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
-                                    <div className="card">
-                                        <div className="card-header">
-                                            <h3 className="card-title">
-                                                Notifications
-                                            </h3>
-                                            <div className="card-actions">
-                                                <Link
-                                                    href={route(
-                                                        "notifications.reads"
-                                                    )}
-                                                    method="POST"
-                                                    as="button"
-                                                    onSuccess={() =>
-                                                        toast.success(
-                                                            "Mark all as read 🚀"
-                                                        )
-                                                    }
-                                                >
-                                                    Mark all as read
-                                                </Link>
-                                            </div>
-                                        </div>
-                                        <div className="list-group list-group-flush list-group-hoverable">
-                                            <div
-                                                style={{ width: "500px" }}
-                                            ></div>
-
-                                            {notifications.map((data) => {
-                                                return (
-                                                    <div
-                                                        className="list-group-item"
-                                                        key={data.id}
-                                                    >
-                                                        <div className="row align-items-center">
-                                                            <div className="col-auto">
-                                                                <span
-                                                                    className={`status-dot status-dot-animated ${
-                                                                        data.read_at
-                                                                            ? "bg-secondary"
-                                                                            : "bg-red"
-                                                                    } d-block`}
-                                                                />
-                                                            </div>
-                                                            <div className="col text-truncate">
-                                                                <Link
-                                                                    href={route(
-                                                                        "notifications.show",
-                                                                        data.id
-                                                                    )}
-                                                                    className="text-capitalize text-body d-block"
-                                                                >
-                                                                    {data.type}
-                                                                </Link>
-                                                                <div className="d-block text-muted text-truncate mt-n1 w-full">
-                                                                    {
-                                                                        data
-                                                                            .data
-                                                                            .message
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div className="nav-item dropdown">
                             <a
@@ -225,20 +144,6 @@ export default function Navigation({ user }) {
                                 </div>
                             </a>
                             <div className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <Link
-                                    href={route("notifications.index")}
-                                    className="dropdown-item"
-                                >
-                                    Notifications
-                                </Link>
-                                <Link
-                                    href={route("activities.index")}
-                                    className="dropdown-item"
-                                >
-                                    Activities
-                                </Link>
-
-                                <div className="dropdown-divider" />
                                 <Link
                                     href={route("profile.edit")}
                                     className="dropdown-item"
