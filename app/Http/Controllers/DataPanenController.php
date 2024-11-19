@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DataPanen;
 use App\Models\Desa;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DataPanenController extends Controller
@@ -11,10 +12,13 @@ class DataPanenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $dataPanen = DataPanen::with('desa')->orderBy('created_at', 'DESC')->orderBy('tahun', 'DESC')->get();
-        return inertia("Admin/DataPanen", ["dataPanen" => $dataPanen]);
+        $dataPanen = DataPanen::with('desa', 'user')->orderBy('created_at', 'DESC')->orderBy('tahun', 'DESC');
+        if ($request->user()->hasRole('petani')) {
+            $dataPanen->where('user_id', $request->user()->id);
+        }
+        return inertia("Admin/DataPanen", ["dataPanen" => $dataPanen->get()]);
     }
 
     /**
@@ -23,7 +27,8 @@ class DataPanenController extends Controller
     public function create()
     {
         $desa = Desa::all();
-        return inertia("Admin/TambahDataPanen", ["desa" => $desa]);
+        $users = User::role('petani')->get();
+        return inertia("Admin/TambahDataPanen", ["desa" => $desa, "users" => $users]);
     }
 
     /**
@@ -31,7 +36,19 @@ class DataPanenController extends Controller
      */
     public function store(Request $request)
     {
-        DataPanen::create($request->all());
+        $request->validate([
+            'satuan_bibit' => ['required'],
+            'satuan_pupuk' => ['required'],
+        ]);
+
+        $data = $request->all();
+        $data['user_id'] = auth()->id();
+
+        if ($request->user()->hasRole('admin')) {
+            $data['user_id'] = $request->user_id;
+        }
+
+        DataPanen::create($data);
         return redirect('/data-panen');
     }
 
@@ -48,7 +65,9 @@ class DataPanenController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $dataPanen = DataPanen::find($id);
+        $desa = Desa::all();
+        return inertia("Admin/EditDataPanen", ["desa" => $desa, "datapanen" => $dataPanen]);
     }
 
     /**
@@ -56,7 +75,8 @@ class DataPanenController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DataPanen::find($id)->update($request->all());
+        return redirect('/data-panen');
     }
 
     /**

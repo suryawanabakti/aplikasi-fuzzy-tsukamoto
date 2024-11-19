@@ -48,14 +48,12 @@ export default function Login({ status, canResetPassword }) {
                         </h2>
                         <form onSubmit={submit}>
                             <div className="mb-3">
-                                <label className="form-label">
-                                    Email address
-                                </label>
+                                <label className="form-label">Username</label>
                                 <input
-                                    type="email"
+                                    type="text"
                                     className="form-control"
-                                    placeholder="your@email.com"
-                                    autoComplete="email"
+                                    placeholder="Your username"
+                                    autoComplete="username"
                                     onChange={(e) =>
                                         setData("email", e.target.value)
                                     }

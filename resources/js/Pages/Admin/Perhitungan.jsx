@@ -8,7 +8,7 @@ export default function Perhitungan({ auth }) {
         luas_lahan: "",
         bibit: "",
         pupuk: "",
-        p_luas_lahan: "2",
+        p_luas_lahan: "1",
         p_bibit: "1",
         p_pupuk: "1",
         luas_lahan_terbesar: 27,
@@ -17,6 +17,8 @@ export default function Perhitungan({ auth }) {
         bibit_terkecil: 2,
         pupuk_terbanyak: 10,
         pupuk_terkecil: 3,
+        bulan: 10,
+        tahun: 2024,
     });
 
     const [luasLahan, setLuasLahan] = useState("2");
@@ -171,7 +173,7 @@ export default function Perhitungan({ auth }) {
                                         className="form-check-label"
                                         htmlFor="pupukkg"
                                     >
-                                        Kg
+                                        Ton
                                     </label>
                                 </div>
                                 <div className="form-check form-check-inline">
@@ -187,7 +189,7 @@ export default function Perhitungan({ auth }) {
                                         className="form-check-label"
                                         htmlFor="pupukgram"
                                     >
-                                        gram
+                                        Kg
                                     </label>
                                 </div>
                             </div>
@@ -195,7 +197,7 @@ export default function Perhitungan({ auth }) {
                     </div>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-6" hidden>
                     <div className="card">
                         <div className="card-header">
                             <h4 className="card-title">Variable</h4>
@@ -376,6 +378,55 @@ export default function Perhitungan({ auth }) {
                         </div>
                         <form onSubmit={submit}>
                             <div className="card-body">
+                                <div className="row">
+                                    <div className="mb-3 col-md-6">
+                                        <label
+                                            htmlFor=""
+                                            className="form-label required"
+                                        >
+                                            Tahun
+                                        </label>
+                                        <input
+                                            value={data.tahun}
+                                            type="number"
+                                            className="form-control"
+                                            onChange={(e) =>
+                                                setData("tahun", e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="mb-3 col-md-6">
+                                        <label
+                                            htmlFor=""
+                                            className="form-label required"
+                                        >
+                                            Bulan
+                                        </label>
+                                        <select
+                                            name="bulan"
+                                            id="bulan"
+                                            className="form-select"
+                                            onChange={(e) =>
+                                                setData("bulan", e.target.value)
+                                            }
+                                            defaultValue={data.bulan}
+                                        >
+                                            <option value="1">Januari</option>
+                                            <option value="2">Februari</option>
+                                            <option value="3">Maret</option>
+                                            <option value="4">April</option>
+                                            <option value="5">Mei</option>
+                                            <option value="6">Juni</option>
+                                            <option value="7">July</option>
+                                            <option value="8">Agustus</option>
+                                            <option value="9">September</option>
+                                            <option value="10">Oktober</option>
+                                            <option value="11">November</option>
+                                            <option value="12">Desember</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div className="mb-3">
                                     <label
                                         htmlFor=""
@@ -441,8 +492,7 @@ export default function Perhitungan({ auth }) {
                                         className="form-label required"
                                     >
                                         Pupuk ~{" "}
-                                        {data.p_pupuk == "1" ? "kg" : <>gram</>}
-                                        .
+                                        {data.p_pupuk == "1" ? "Ton" : <>kg</>}.
                                     </label>
                                     <input
                                         required

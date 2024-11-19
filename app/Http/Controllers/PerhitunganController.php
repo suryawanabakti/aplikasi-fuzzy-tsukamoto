@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataPanen;
 use App\Models\Perhitungan;
 use Illuminate\Http\Request;
 
@@ -153,20 +154,37 @@ class PerhitunganController extends Controller
     {
 
         // Diketahui : 
-        $luasLahanTertinggi = $request->luas_lahan_terbesar;
-        $luasLahanTerkecil = $request->luas_lahan_terkecil;
+        $luasLahanTertinggi =  4;
+        $luasLahanTerkecil =  0.5;
 
+        $bibitTertinggi =  8;
+        $bibitTerkecil =  1;
 
-        $bibitTertinggi = $request->bibit_terbanyak;
-        $bibitTerkecil = $request->bibit_terkecil;
+        $pupukTertinggi =  56;
+        $pupukTerkecil =  10;
 
-        $pupukTertinggi = $request->pupuk_terbanyak;
-        $pupukTerkecil = $request->pupuk_terkecil;
+        $produksiTertinggi = 700;
+        $produksiTerkecil = 100;
 
-        if ($request->p_luas_lahan == 1) {
+        // if ($request->user()->hasRole('petani')) {
+
+        //     $luasLahanTertinggi =  DataPanen::where('user_id', $request->user()->id)->orderBy('luas_lahan', 'desc')->first()->luas_lahan ?? 4;
+        //     $luasLahanTerkecil =  DataPanen::where('user_id', $request->user()->id)->orderBy('luas_lahan', 'asc')->first()->luas_lahan ?? 0.5;
+
+        //     $bibitTertinggi =  DataPanen::where('user_id', $request->user()->id)->orderBy('bibit', 'desc')->first()->bibit ?? 8;
+        //     $bibitTerkecil =  DataPanen::where('user_id', $request->user()->id)->orderBy('bibit', 'asc')->first()->bibit ?? 1;
+
+        //     $pupukTertinggi =  DataPanen::where('user_id', $request->user()->id)->orderBy('pupuk', 'desc')->first()->pupuk ?? 56;
+        //     $pupukTerkecil =  DataPanen::where('user_id', $request->user()->id)->orderBy('pupuk', 'asc')->first()->pupuk ?? 10;
+
+        //     $produksiTertinggi = DataPanen::where('user_id', $request->user()->id)->orderBy('hasil_panen', 'desc')->first()->hasil_panen ?? 700;
+        //     $produksiTerkecil =  DataPanen::where('user_id', $request->user()->id)->orderBy('hasil_panen', 'asc')->first()->hasil_panen ?? 100;
+        // }
+
+        if ($request->p_luas_lahan == 2) {
             $luasLahanTertinggi = $luasLahanTertinggi * 10000;
             $luasLahanTerkecil = $luasLahanTerkecil * 10000;
-            $request['luas_lahan'] = $request->luas_lahan * 10000;
+            $request['luas_lahan'] = $request->luas_lahan / 10000;
         }
 
         if ($request->p_bibit == 2) {
@@ -182,10 +200,6 @@ class PerhitunganController extends Controller
         }
 
 
-
-        $produksiTertinggi = 261;
-        $produksiTerkecil = 81;
-
         // Cari Derajat Keangotaan Luas lahan
         $derajatLahanTerkecil = round(($luasLahanTertinggi - $request->luas_lahan) / ($luasLahanTertinggi - $luasLahanTerkecil), 2);
 
@@ -193,15 +207,18 @@ class PerhitunganController extends Controller
 
 
         //Cari Derajat Keanggotaan Bibit
-        $derajatBibitTerkecil = round(($bibitTertinggi - $request->bibit) / ($bibitTertinggi - $bibitTerkecil), 2);
+        // =ROUND((MAX(E:E)-E5)/(MAX(E:E)-MIN(E:E)),2)
+        $derajatBibitTerkecil = round((8 - $request->bibit) / ($bibitTertinggi - $bibitTerkecil), 2);
 
         $derajatBibitTertinggi = round(($request->bibit - $bibitTerkecil) / ($bibitTertinggi - $bibitTerkecil), 2);
         //Cari Derajat Keanggotaan Pupuk
+
         $derajatPupukTerkecil = round(($pupukTertinggi - $request->pupuk) / ($pupukTertinggi - $pupukTerkecil), 2);
+
         $derajatPupukTertinggi = round(($request->pupuk - $pupukTerkecil) / ($pupukTertinggi - $pupukTerkecil), 2);
 
         //Produksi berkurang
-        $a1 =  round(min($derajatLahanTerkecil, $derajatBibitTerkecil, $pupukTerkecil), 2);
+        $a1 =  round(min($derajatLahanTerkecil, $derajatBibitTerkecil, $derajatPupukTerkecil), 2);
         $z1 = round($produksiTertinggi - ($a1 * ($produksiTertinggi - $produksiTerkecil)), 2);
 
         $a2 = min($derajatLahanTerkecil, $derajatBibitTertinggi, $derajatPupukTerkecil);
@@ -249,10 +266,14 @@ class PerhitunganController extends Controller
         $a15 = min($derajatLahanTertinggi, $derajatBibitTerkecil, $derajatPupukTertinggi);
         $z15  =  round(($a15 * ($produksiTertinggi - $produksiTerkecil)) + $produksiTerkecil, 2);
 
-        $a16 = min($derajatLahanTertinggi, $derajatBibitTerkecil, $derajatPupukTertinggi);
+
+        $a16 = min($derajatLahanTertinggi, $derajatBibitTertinggi, $derajatPupukTertinggi);
         $z16  =   round(($a16 * ($produksiTertinggi - $produksiTerkecil)) + $produksiTerkecil, 2);
-        $hasil = ($a1 * $z1) + ($a2 * $z2) + ($a3 * $z3) + ($a4 * $z4) + + ($a5 * $z5) + + ($a6 * $z6) + ($a7 * $z7) + ($a8 * $z8) + ($a9 * $z9) + ($a10 * $z10) + ($a11 * $z11) + ($a12 * $z12) + ($a13 * $z13) + ($a14 * $z14) + ($a15 * $z15) + ($a16 * $z16) /  ($a1 + $a2 + $a3 + $a4 + $a5 + $a6 + $a7 + $a8 + $a9 + $a10 + $a11 + $a12 + $a13 + $a14 + $a15 + $a16);
-        // $hasil = (($a1 * $z1) + ($a2 * $z2) + ($a3 * $z3) + ($a4 * $z4) + ($a5 * $z5) + ($a6 * $z6) + ($a7 * $z7) + ($a8 * $z8) + ($a9 * $z9) + ($a11 * $z11) + ($a12 * $z12) + ($a13 * $z13) + ($a14 * $z14) + ($a15 * $z15) + ($a16 * $z16)) / ($a1 + $a2 + $a3 + $a4 + $a5 + $a6 + $a7 + $a8 + $a9 + $a10 + $a11 + $a12 + $a13 + $a14 + $a15 + $a16);
+
+        // $hasil = ($a1 * $z1) + ($a2 * $z2) + ($a3 * $z3) + ($a4 * $z4) + + ($a5 * $z5) + + ($a6 * $z6) + ($a7 * $z7) + ($a8 * $z8) + ($a9 * $z9) + ($a10 * $z10) + ($a11 * $z11) + ($a12 * $z12) + ($a13 * $z13) + ($a14 * $z14) + ($a15 * $z15) + ($a16 * $z16) /  ($a1 + $a2 + $a3 + $a4 + $a5 + $a6 + $a7 + $a8 + $a9 + $a10 + $a11 + $a12 + $a13 + $a14 + $a15 + $a16);
+
+
+        $hasil = (($a1 * $z1) + ($a2 * $z2) + ($a3 * $z3) + ($a4 * $z4) + ($a5 * $z5) + ($a6 * $z6) + ($a7 * $z7) + ($a8 * $z8) + ($a9 * $z9) + ($a11 * $z11) + ($a12 * $z12) + ($a13 * $z13) + ($a14 * $z14) + ($a15 * $z15) + ($a16 * $z16)) / ($a1 + $a2 + $a3 + $a4 + $a5 + $a6 + $a7 + $a8 + $a9 + $a10 + $a11 + $a12 + $a13 + $a14 + $a15 + $a16);
 
         $data = $request->all();
         $data['hasil'] = $hasil;
@@ -295,7 +316,11 @@ class PerhitunganController extends Controller
         $data['z15'] = $z15;
         $data['a16'] = $a16;
         $data['z16'] = $z16;
-        Perhitungan::create($data);
+        $data['bulan'] = $request->bulan;
+        $data['tahun'] = $request->tahun;
+        $data['user_id'] = $request->user()->id;
+        $data['type'] = 'petani';
+        $perhitungan = Perhitungan::create($data);
         return redirect(route("riwayat.index"));
     }
     // Fungsi keanggotaan

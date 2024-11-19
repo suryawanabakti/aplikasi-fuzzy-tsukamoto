@@ -18,7 +18,7 @@ export default function Authenticated({ user, header, children }) {
                 }}
             />
 
-            <div className="page" style={{ zoom: "90%" }}>
+            <div className="page">
                 <Toaster />
                 <Navigation user={user} />
 

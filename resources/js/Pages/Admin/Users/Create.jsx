@@ -73,26 +73,29 @@ export default function Create({ auth, years, months, days }) {
                         />
                         <div className="mb-3">
                             <label className="form-label required">
-                                Gender
+                                Jenis Kelamin
                             </label>
-                            <div className="form-selectgroup">
-                                <label className="form-selectgroup-item">
+                            <>
+                                <div className="form-check form-check-inline">
                                     <input
                                         type="radio"
                                         name="gender"
                                         defaultValue="male"
-                                        className="form-selectgroup-input"
                                         onChange={(e) =>
                                             setData("gender", e.target.value)
                                         }
+                                        id="inlineRadio1"
+                                        className="form-check-input"
                                         defaultChecked=""
                                     />
-                                    <span className="form-selectgroup-label d-flex justify-between space-x-2">
-                                        Male
-                                        <IconGenderMale className="icon" />
-                                    </span>
-                                </label>
-                                <label className="form-selectgroup-item">
+                                    <label
+                                        className="form-check-label"
+                                        htmlFor="inlineRadio1"
+                                    >
+                                        Laki - laki
+                                    </label>
+                                </div>
+                                <div className="form-check form-check-inline">
                                     <input
                                         type="radio"
                                         name="gender"
@@ -100,15 +103,19 @@ export default function Create({ auth, years, months, days }) {
                                         onChange={(e) =>
                                             setData("gender", e.target.value)
                                         }
-                                        className="form-selectgroup-input"
+                                        className="form-check-input"
                                         defaultChecked=""
+                                        id="inlineRadio2"
                                     />
-                                    <span className="form-selectgroup-label d-flex justify-between space-x-2">
-                                        Female
-                                        <IconGenderFemale className="icon" />
-                                    </span>
-                                </label>
-                            </div>
+                                    <label
+                                        className="form-check-label"
+                                        htmlFor="inlineRadio2"
+                                    >
+                                        Perempaun
+                                    </label>
+                                </div>
+                            </>
+
                             {errors.gender && (
                                 <small className="text-danger">
                                     {errors.gender}
@@ -212,12 +219,12 @@ export default function Create({ auth, years, months, days }) {
                         />
                         <FormGroup
                             required={true}
-                            label="Email"
-                            id="email"
-                            type="email"
+                            label="Username"
+                            id="username"
+                            type="text"
                             onChange={(e) => setData("email", e.target.value)}
                             value={data.email}
-                            placeholder="Iput email..."
+                            placeholder="Input username..."
                             errors={errors.email}
                         />
                         <FormGroup

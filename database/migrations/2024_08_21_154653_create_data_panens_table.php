@@ -11,11 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
+
         Schema::create('data_panens', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->unsignedBigInteger('desa_id');
             $table->foreign('desa_id')->references('id')->on('desa')->cascadeOnDelete();
-            $table->integer('tahun');
+            $table->string('bulan');
+            $table->string('tahun');
+            $table->double('luas_lahan');
+            $table->double('bibit');
+            $table->double('pupuk');
             $table->double('hasil_panen');
             $table->timestamps();
         });

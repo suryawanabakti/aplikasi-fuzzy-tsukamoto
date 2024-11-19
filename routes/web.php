@@ -8,6 +8,8 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RuleController;
+use App\Models\DataPanen;
+use App\Models\Perhitungan;
 use App\Models\User;
 use App\Notifications\FeedbackNotification;
 use Illuminate\Foundation\Application;
@@ -37,7 +39,10 @@ Route::get('/send-notification', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $countPetani = User::role('petani')->count();
+    $countPanen = DataPanen::count();
+    $countPerhitungan = Perhitungan::count();
+    return Inertia::render('Dashboard', ["countPetani" => $countPetani, "countPanen" => $countPanen, "countPerhitungan" => $countPerhitungan]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -49,9 +54,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/history', [HistoryController::class, 'index'])->name('riwayat.index');
     Route::get('/history/{perhitungan}', [HistoryController::class, 'show'])->name('riwayat.show');
     Route::delete('/history/{perhitungan}', [HistoryController::class, 'destroy'])->name('riwayat.destroy');
-
-
-
 
     Route::resource('users', UserController::class)->names("admin.users");
     Route::resource('data-panen', DataPanenController::class)->names("admin.data-panen");

@@ -63,82 +63,57 @@ export default function Index({ auth, users, search }) {
     return (
         <AuthenticatedLayout user={auth.user} header={header}>
             <Head title="Users" />
-            <div className="row row-cards">
-                {users.data.map((user) => {
-                    return (
-                        <div className="col-md-6 col-lg-3" key={user.id}>
-                            <div className="card">
-                                <div className="card-body p-4 text-center">
-                                    <span
-                                        className="avatar avatar-xl mb-3 rounded"
-                                        style={
-                                            user.photo
-                                                ? {
-                                                      backgroundImage: `url(./storage/${user.photo})`,
-                                                  }
-                                                : {
-                                                      backgroundImage: `url(https://ui-avatars.com/api/?name=${encodeURI(
-                                                          user.name
-                                                      )})`,
-                                                  }
-                                        }
-                                    />
-                                    <h3 className="m-0 mb-1">
-                                        <a href="#">{user.name}</a>
-                                    </h3>
-                                    <div className="text-muted text-capitalize">
-                                        {user.gender}
-                                    </div>
-                                    <div className="mt-3">
-                                        {user.roles.map((role) => {
-                                            return (
-                                                <span
-                                                    className="badge bg-purple-lt text-capitalize"
-                                                    key={role.id}
+            <div className="row">
+                <div className="col-md-12">
+                    <div className="card">
+                        <table className="table card-table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Nama</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {users.data.map((data, index) => {
+                                    return (
+                                        <tr key={data.id}>
+                                            <td>{index + 1}</td>
+                                            <td>{data.name}</td>
+                                            <td className="flex gap-2">
+                                                <Link
+                                                    href={route(
+                                                        "admin.users.edit",
+                                                        data.id
+                                                    )}
+                                                    className="btn btn-warning"
                                                 >
-                                                    {role.name}
-                                                </span>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                                <div className="d-flex">
-                                    <Link
-                                        href={route(
-                                            "admin.users.edit",
-                                            user.id
-                                        )}
-                                        className="card-btn"
-                                    >
-                                        <IconEdit className="icon" />
-                                        Edit
-                                    </Link>
-                                    <Link
-                                        onBefore={() =>
-                                            confirm("Are you sure?") &&
-                                            toast.loading("Tunggu Sebentar")
-                                        }
-                                        onFinish={() => toast.dismiss()}
-                                        onProgressCapture={() =>
-                                            toast.loading("test")
-                                        }
-                                        onProgress={() => toast.loading("test")}
-                                        as="button"
-                                        method="delete"
-                                        href={route(
-                                            "admin.users.destroy",
-                                            user.id
-                                        )}
-                                        className="card-btn"
-                                    >
-                                        <IconTrash className="icon" />
-                                        Delete
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    );
-                })}
+                                                    Edit
+                                                </Link>
+                                                <Link
+                                                    href={route(
+                                                        "admin.users.destroy",
+                                                        data.id
+                                                    )}
+                                                    preserveScroll={true}
+                                                    onBefore={() =>
+                                                        confirm(
+                                                            "Apakah anda yakin menghapus " +
+                                                                data.name
+                                                        )
+                                                    }
+                                                    className="btn btn-danger"
+                                                >
+                                                    Hapus
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             <Pagination
                 links={users.meta.links}

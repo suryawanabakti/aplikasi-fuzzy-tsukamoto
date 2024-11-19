@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "@inertiajs/react";
 import {
+    IconDatabase,
     IconHistory,
     IconHome,
     IconList,
@@ -23,7 +24,21 @@ export default function NavLinkPetani() {
                     <span className="nav-link-title">Home</span>
                 </Link>
             </li>
-
+            <li
+                className={`nav-item ${
+                    route().current("admin.data-panen.*") && "active"
+                }`}
+            >
+                <Link
+                    className="nav-link"
+                    href={route("admin.data-panen.index")}
+                >
+                    <span className="nav-link-icon d-md-none d-lg-inline-block">
+                        <IconDatabase className="icon" />
+                    </span>
+                    <span className="nav-link-title">Data Panen</span>
+                </Link>
+            </li>
             <li
                 className={`nav-item ${
                     route().current("perhitungan*") && "active"

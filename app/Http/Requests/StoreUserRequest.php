@@ -23,7 +23,7 @@ class StoreUserRequest extends FormRequest
     {
         return [
             "name" => ['required', 'max:255'],
-            "email" => ['required', 'max:255', 'email'],
+            "email" => ['required', 'max:255', 'alpha_dash'],
             "password" => ['required', 'confirmed'],
             "gender" => ['in:female,male'],
             "month" => ['required'],

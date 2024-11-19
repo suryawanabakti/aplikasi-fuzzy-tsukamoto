@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('perhitungan', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->enum('type', ['petani', 'desa']);
+            $table->string('tahun')->nullable();
+            $table->string('bulan')->nullable();
             $table->double('luas_lahan');
             $table->double('bibit');
             $table->double('pupuk');
