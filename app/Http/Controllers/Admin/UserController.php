@@ -18,7 +18,7 @@ class UserController extends Controller
             $users->where('name', 'LIKE', '%' . request('search') . '%');
         }
         // return UserResource::collection($users);
-        return inertia("Admin/Users/Index", ["users" => UserResource::collection($users->paginate(8)), "search" => request('search')]);
+        return inertia("Admin/Users/Index", ["users" => UserResource::collection($users->get()), "search" => request('search')]);
     }
 
     public function create()

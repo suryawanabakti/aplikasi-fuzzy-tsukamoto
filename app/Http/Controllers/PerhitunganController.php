@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\DataPanen;
 use App\Models\Perhitungan;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class PerhitunganController extends Controller
 {
     public function index()
     {
-        return inertia("Admin/Perhitungan");
+        $setting = Setting::first();
+        return inertia("Admin/Perhitungan", ["setting" => $setting]);
     }
     public function store4(Request $request)
     {
@@ -147,6 +149,8 @@ class PerhitunganController extends Controller
         $data['z16'] = $z16;
 
         Perhitungan::create($data);
+
+
         return redirect(route("riwayat.index"));
     }
     public function store2(Request $request) {}
@@ -154,17 +158,17 @@ class PerhitunganController extends Controller
     {
 
         // Diketahui : 
-        $luasLahanTertinggi =  4;
-        $luasLahanTerkecil =  0.5;
+        $luasLahanTertinggi =  $request->max_luas_lahan ?? 4;
+        $luasLahanTerkecil =  $request->min_luas_lahan ?? 0.5;
 
-        $bibitTertinggi =  8;
-        $bibitTerkecil =  1;
+        $bibitTertinggi =  $request->max_bibit ?? 8;
+        $bibitTerkecil =  $request->min_bibit ?? 1;
 
-        $pupukTertinggi =  56;
-        $pupukTerkecil =  10;
+        $pupukTertinggi =  $request->max_pupuk ?? 56;
+        $pupukTerkecil =  $request->min_pupuk ?? 10;
 
-        $produksiTertinggi = 700;
-        $produksiTerkecil = 100;
+        $produksiTertinggi = $request->max_hasil ?? 700;
+        $produksiTerkecil =  $request->min_hasil ?? 100;
 
         // if ($request->user()->hasRole('petani')) {
 
@@ -180,24 +184,6 @@ class PerhitunganController extends Controller
         //     $produksiTertinggi = DataPanen::where('user_id', $request->user()->id)->orderBy('hasil_panen', 'desc')->first()->hasil_panen ?? 700;
         //     $produksiTerkecil =  DataPanen::where('user_id', $request->user()->id)->orderBy('hasil_panen', 'asc')->first()->hasil_panen ?? 100;
         // }
-
-        if ($request->p_luas_lahan == 2) {
-            $luasLahanTertinggi = $luasLahanTertinggi * 10000;
-            $luasLahanTerkecil = $luasLahanTerkecil * 10000;
-            $request['luas_lahan'] = $request->luas_lahan / 10000;
-        }
-
-        if ($request->p_bibit == 2) {
-            $bibitTertinggi = $bibitTertinggi / 1000;
-            $bibitTerkecil = $bibitTerkecil / 1000;
-            $request['bibit'] = $request->bibit / 1000;
-        }
-
-        if ($request->p_pupuk == 2) {
-            $pupukTertinggi = $pupukTertinggi / 1000;
-            $pupukTerkecil = $pupukTerkecil / 1000;
-            $request['pupuk'] = $request->pupuk / 1000;
-        }
 
 
         // Cari Derajat Keangotaan Luas lahan
@@ -320,7 +306,35 @@ class PerhitunganController extends Controller
         $data['tahun'] = $request->tahun;
         $data['user_id'] = $request->user()->id;
         $data['type'] = 'petani';
+
         $perhitungan = Perhitungan::create($data);
+        $setting = Setting::where('user_id', auth()->id())->first();
+        if (empty($setting)) {
+
+            Setting::create([
+                'user_id' => auth()->id(),
+                'max_luas_lahan' => $request->max_luas_lahan,
+                'min_luas_lahan' => $request->min_luas_lahan,
+                'max_bibit' => $request->max_bibit,
+                'min_bibit' => $request->min_bibit,
+                'max_pupuk' => $request->max_pupuk,
+                'min_pupuk' => $request->min_pupuk,
+                'max_hasil' => $request->max_hasil,
+                'min_hasil' => $request->min_hasil
+            ]);
+        } else {
+            $setting->update([
+                'max_luas_lahan' => $request->max_luas_lahan,
+                'min_luas_lahan' => $request->min_luas_lahan,
+                'max_bibit' => $request->max_bibit,
+                'min_bibit' => $request->min_bibit,
+                'max_pupuk' => $request->max_pupuk,
+                'min_pupuk' => $request->min_pupuk,
+                'max_hasil' => $request->max_hasil,
+                'min_hasil' => $request->min_hasil
+            ]);
+        }
+
         return redirect(route("riwayat.index"));
     }
     // Fungsi keanggotaan

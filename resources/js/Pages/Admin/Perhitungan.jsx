@@ -3,7 +3,7 @@ import { Head, useForm } from "@inertiajs/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-export default function Perhitungan({ auth }) {
+export default function Perhitungan({ auth, setting }) {
     const { data, setData, errors, processing, post, reset } = useForm({
         luas_lahan: "",
         bibit: "",
@@ -11,13 +11,15 @@ export default function Perhitungan({ auth }) {
         p_luas_lahan: "1",
         p_bibit: "1",
         p_pupuk: "1",
-        luas_lahan_terbesar: 27,
-        luas_lahan_terkecil: 14,
-        bibit_terbanyak: 5,
-        bibit_terkecil: 2,
-        pupuk_terbanyak: 10,
-        pupuk_terkecil: 3,
-        bulan: 10,
+        max_luas_lahan: setting?.max_luas_lahan,
+        min_luas_lahan: setting?.min_luas_lahan,
+        max_bibit: setting?.max_bibit,
+        min_bibit: setting?.min_bibit,
+        max_pupuk: setting?.max_pupuk,
+        min_pupuk: setting?.min_pupuk,
+        max_hasil: setting?.max_hasil,
+        min_hasil: setting?.min_hasil,
+        bulan: 12,
         tahun: 2024,
     });
 
@@ -41,163 +43,9 @@ export default function Perhitungan({ auth }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Perhitungan" />
-            <div className="text-end d-flex justify-content-end mb-2">
-                <button
-                    className={`btn btn-danger me-2 ${
-                        processing && "btn-loading"
-                    } d-flex justify-end`}
-                    onClick={submit}
-                >
-                    Hitung
-                </button>
-                <button
-                    className={`btn btn-danger ${
-                        processing && "btn-loading"
-                    } d-flex justify-end`}
-                >
-                    Clear
-                </button>
-            </div>
 
             <div className="row">
                 <div className="col-md-6">
-                    <div className="card">
-                        <div className="card-header">
-                            <h4 className="card-title">
-                                Pengaturan Perhitungan
-                            </h4>
-                        </div>
-                        <div className="card-body">
-                            <div className="mb-3">
-                                <label htmlFor="" className="form-label">
-                                    Luas Lahan
-                                </label>
-                                <>
-                                    <div className="form-check form-check-inline">
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="inlineRadioOptions"
-                                            id="inlineRadio1"
-                                            defaultValue="option1"
-                                            checked={data.p_luas_lahan == "1"}
-                                            onChange={() =>
-                                                setData("p_luas_lahan", "1")
-                                            }
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="inlineRadio1"
-                                        >
-                                            Hektar
-                                        </label>
-                                    </div>
-                                    <div className="form-check form-check-inline">
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="inlineRadioOptions"
-                                            id="inlineRadio2"
-                                            value="2"
-                                            checked={data.p_luas_lahan == "2"}
-                                            onChange={() =>
-                                                setData("p_luas_lahan", "2")
-                                            }
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="inlineRadio2"
-                                        >
-                                            m <sup>2</sup>
-                                        </label>
-                                    </div>
-                                </>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="" className="form-label">
-                                    Bahan Baku Bibit
-                                </label>
-                                <>
-                                    <div className="form-check form-check-inline">
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="pengaturan_bibit"
-                                            id="bibitkg"
-                                            checked={data.p_bibit == "1"}
-                                            onChange={() =>
-                                                setData("p_bibit", "1")
-                                            }
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="bibitkg"
-                                        >
-                                            Kg
-                                        </label>
-                                    </div>
-                                    <div className="form-check form-check-inline">
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="pengaturan_bibit"
-                                            id="bibitgram"
-                                            checked={data.p_bibit == "2"}
-                                            onChange={() =>
-                                                setData("p_bibit", "2")
-                                            }
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="bibitgram"
-                                        >
-                                            gram
-                                        </label>
-                                    </div>
-                                </>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="" className="form-label">
-                                    Pupuk
-                                </label>
-                                <div className="form-check form-check-inline">
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        name="pengaturan_pupuk"
-                                        id="pupukkg"
-                                        checked={data.p_pupuk == "1"}
-                                        onChange={() => setData("p_pupuk", "1")}
-                                    />
-                                    <label
-                                        className="form-check-label"
-                                        htmlFor="pupukkg"
-                                    >
-                                        Ton
-                                    </label>
-                                </div>
-                                <div className="form-check form-check-inline">
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        name="pengaturan_pupuk"
-                                        id="pupukgram"
-                                        checked={data.p_pupuk == "2"}
-                                        onChange={() => setData("p_pupuk", "2")}
-                                    />
-                                    <label
-                                        className="form-check-label"
-                                        htmlFor="pupukgram"
-                                    >
-                                        Kg
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-md-6" hidden>
                     <div className="card">
                         <div className="card-header">
                             <h4 className="card-title">Variable</h4>
@@ -207,7 +55,7 @@ export default function Perhitungan({ auth }) {
                                 <div className="mb-3 row">
                                     <div className="col-6">
                                         <label
-                                            htmlFor="luas_lahan_terbesar"
+                                            htmlFor="max_luas_lahan"
                                             className="form-label"
                                         >
                                             Luas Lahan Terbesar ~{" "}
@@ -221,13 +69,13 @@ export default function Perhitungan({ auth }) {
                                             .{" "}
                                         </label>
                                         <input
-                                            id="luas_lahan_terbesar"
+                                            id="max_luas_lahan"
                                             type="number"
                                             className="form-control"
-                                            value={data.luas_lahan_terbesar}
+                                            value={data.max_luas_lahan}
                                             onChange={(e) =>
                                                 setData(
-                                                    "luas_lahan_terbesar",
+                                                    "max_luas_lahan",
                                                     e.target.value
                                                 )
                                             }
@@ -235,7 +83,7 @@ export default function Perhitungan({ auth }) {
                                     </div>
                                     <div className="col-6">
                                         <label
-                                            htmlFor="luas_lahan_terkecil"
+                                            htmlFor="min_luas_lahan"
                                             className="form-label"
                                         >
                                             Luas Lahan Terkecil ~{" "}
@@ -249,13 +97,13 @@ export default function Perhitungan({ auth }) {
                                             .{" "}
                                         </label>
                                         <input
-                                            id="luas_lahan_terkecil"
+                                            id="min_luas_lahan"
                                             type="number"
                                             className="form-control"
-                                            value={data.luas_lahan_terkecil}
+                                            value={data.min_luas_lahan}
                                             onChange={(e) =>
                                                 setData(
-                                                    "luas_lahan_terkecil",
+                                                    "min_luas_lahan",
                                                     e.target.value
                                                 )
                                             }
@@ -265,7 +113,7 @@ export default function Perhitungan({ auth }) {
                                 <div className="mb-3 row">
                                     <div className="col-6">
                                         <label
-                                            htmlFor="bibit_terbanyak"
+                                            htmlFor="max_bibit"
                                             className="form-label"
                                         >
                                             Bibit terbanyak ~{" "}
@@ -276,13 +124,13 @@ export default function Perhitungan({ auth }) {
                                             )}
                                         </label>
                                         <input
-                                            id="bibit_terbanyak"
+                                            id="max_bibit"
                                             type="number"
                                             className="form-control"
-                                            value={data.bibit_terbanyak}
+                                            value={data.max_bibit}
                                             onChange={(e) =>
                                                 setData(
-                                                    "bibit_terbanyak",
+                                                    "max_bibit",
                                                     e.target.value
                                                 )
                                             }
@@ -304,10 +152,10 @@ export default function Perhitungan({ auth }) {
                                             id="bibit_tersedikit"
                                             type="number"
                                             className="form-control"
-                                            value={data.bibit_terkecil}
+                                            value={data.min_bibit}
                                             onChange={(e) =>
                                                 setData(
-                                                    "bibit_terkecil",
+                                                    "min_bibit",
                                                     e.target.value
                                                 )
                                             }
@@ -317,24 +165,19 @@ export default function Perhitungan({ auth }) {
                                 <div className="mb-3 row">
                                     <div className="col-6">
                                         <label
-                                            htmlFor="pupuk_terbanyak"
+                                            htmlFor="max_pupuk"
                                             className="form-label"
                                         >
-                                            Pupuk Terbanyak ~{" "}
-                                            {data.p_pupuk == "1" ? (
-                                                "kg"
-                                            ) : (
-                                                <>gram</>
-                                            )}
+                                            Pupuk Terbanyak ~ ton
                                         </label>
                                         <input
-                                            id="pupuk_terbanyak"
+                                            id="max_pupuk"
                                             type="number"
                                             className="form-control"
-                                            value={data.pupuk_terbanyak}
+                                            value={data.max_pupuk}
                                             onChange={(e) =>
                                                 setData(
-                                                    "pupuk_terbanyak",
+                                                    "max_pupuk",
                                                     e.target.value
                                                 )
                                             }
@@ -342,24 +185,61 @@ export default function Perhitungan({ auth }) {
                                     </div>
                                     <div className="col-6">
                                         <label
-                                            htmlFor="pupuk_sedikit"
+                                            htmlFor="min_pupuk"
                                             className="form-label"
                                         >
-                                            Pupuk Sedikit ~{" "}
-                                            {data.p_pupuku == "1" ? (
-                                                "kg"
-                                            ) : (
-                                                <>gram</>
-                                            )}
+                                            Pupuk Sedikit ~ ton
                                         </label>
                                         <input
-                                            id="pupuk_sedikit"
+                                            id="min_pupuk"
                                             type="number"
                                             className="form-control"
-                                            value={data.pupuk_terkecil}
+                                            value={data.min_pupuk}
                                             onChange={(e) =>
                                                 setData(
-                                                    "pupuk_terkecil",
+                                                    "min_pupuk",
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                <div className="mb-3 row">
+                                    <div className="col-6">
+                                        <label
+                                            htmlFor="max_hasil"
+                                            className="form-label"
+                                        >
+                                            Produksi Terbanyak ~ kg
+                                        </label>
+                                        <input
+                                            id="max_hasil"
+                                            type="number"
+                                            className="form-control"
+                                            value={data.max_hasil}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "max_hasil",
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                    </div>
+                                    <div className="col-6">
+                                        <label
+                                            htmlFor="min_hasil"
+                                            className="form-label"
+                                        >
+                                            Produksi sedikit ~ kg
+                                        </label>
+                                        <input
+                                            id="min_hasil"
+                                            type="number"
+                                            className="form-control"
+                                            value={data.min_hasil}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "min_hasil",
                                                     e.target.value
                                                 )
                                             }
@@ -509,6 +389,24 @@ export default function Perhitungan({ auth }) {
                                             {errors.pupuk}
                                         </small>
                                     )}
+                                </div>
+
+                                <div className=" d-flex justify-content-between mb-2">
+                                    <button
+                                        className={`btn btn-danger me-2 ${
+                                            processing && "btn-loading"
+                                        } d-flex justify-end`}
+                                        onClick={submit}
+                                    >
+                                        Hitung
+                                    </button>
+                                    <button
+                                        className={`btn btn-danger ${
+                                            processing && "btn-loading"
+                                        } d-flex justify-end`}
+                                    >
+                                        Clear
+                                    </button>
                                 </div>
                             </div>
                         </form>

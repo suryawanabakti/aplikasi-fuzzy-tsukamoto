@@ -32,10 +32,7 @@ export default function Index({ auth, users, search }) {
             <FlashMessage flash={flash} show={show} setShow={setShow} />
             <div className="col">
                 <h2 className="page-title">Petani</h2>
-                <div className="text-muted mt-1">
-                    {users.meta.from}-{users.meta.to} of {users.meta.total}{" "}
-                    people
-                </div>
+                <div className="text-muted mt-1">{users.length}</div>
             </div>
             <div className="col-auto ms-auto d-print-none">
                 <div className="d-flex">
@@ -53,7 +50,7 @@ export default function Index({ auth, users, search }) {
                     >
                         {/* Download SVG icon from http://tabler-icons.io/i/plus */}
                         <IconPlus className="icon" />
-                        New user
+                        Tambah Petani
                     </Link>
                 </div>
             </div>
@@ -86,7 +83,7 @@ export default function Index({ auth, users, search }) {
                                                         "admin.users.edit",
                                                         data.id
                                                     )}
-                                                    className="btn btn-warning"
+                                                    className="btn btn-warning btn-sm"
                                                 >
                                                     Edit
                                                 </Link>
@@ -102,7 +99,7 @@ export default function Index({ auth, users, search }) {
                                                                 data.name
                                                         )
                                                     }
-                                                    className="btn btn-danger"
+                                                    className="btn btn-danger btn-sm"
                                                 >
                                                     Hapus
                                                 </Link>
@@ -115,10 +112,6 @@ export default function Index({ auth, users, search }) {
                     </div>
                 </div>
             </div>
-            <Pagination
-                links={users.meta.links}
-                search={search ? search : ""}
-            />
         </AuthenticatedLayout>
     );
 }

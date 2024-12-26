@@ -208,7 +208,7 @@ export default function Create({ auth, years, months, days }) {
                                 </div>
                             </div>
                         </div>
-                        <FormGroup
+                        {/* <FormGroup
                             label="Photo"
                             id="photo"
                             type="file"
@@ -216,7 +216,7 @@ export default function Create({ auth, years, months, days }) {
                                 setData("photo", e.target.files[0])
                             }
                             errors={errors.photo}
-                        />
+                        /> */}
                         <FormGroup
                             required={true}
                             label="Username"

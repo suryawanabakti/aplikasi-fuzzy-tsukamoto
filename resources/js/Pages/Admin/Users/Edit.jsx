@@ -207,15 +207,7 @@ export default function Edit({
                                 </div>
                             </div>
                         </div>
-                        <FormGroup
-                            label="Photo"
-                            type="file"
-                            id="photo"
-                            onChange={(e) =>
-                                setData("photo", e.target.files[0])
-                            }
-                            errors={errors.photo}
-                        />
+
                         <FormGroup
                             required={true}
                             label="Username"

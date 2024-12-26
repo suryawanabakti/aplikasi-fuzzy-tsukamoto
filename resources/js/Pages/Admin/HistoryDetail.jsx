@@ -103,46 +103,43 @@ export default function HistoryDetail({
                         </div>
                         <div className="card-body">
                             <p className="">
-                                Luas lahan luas : {luas_lahan_tertinggi} Ha.{" "}
-                                <br />
+                                Luas lahan luas : {perhitungan.max_luas_lahan}{" "}
+                                Ha. <br />
                                 Luas lahan sempit : {
-                                    luas_lahan_terkecil
-                                } Ha. <br /> <br />
-                                Bibit banyak : {bibit_tertinggi}kg. <br />
-                                Bibit sedikit : {bibit_terkecil}kg. <br />{" "}
+                                    perhitungan.min_luas_lahan
+                                }{" "}
+                                Ha. <br /> <br />
+                                Bibit banyak : {perhitungan.max_bibit}kg. <br />
+                                Bibit sedikit : {perhitungan.min_bibit}kg.{" "}
+                                <br /> <br />
+                                Pupuk banyak : {perhitungan.max_pupuk}ton.{" "}
                                 <br />
-                                Pupuk banyak : {pupuk_tertinggi}kg. <br />
-                                Pupuk sedikit : {pupuk_terkecil}kg. <br />{" "}
-                                <br />
+                                Pupuk sedikit : {perhitungan.min_pupuk}ton.{" "}
+                                <br /> <br />
                                 Produksi tertinggi : {
-                                    produksi_tertinggi
+                                    perhitungan.max_hasil
                                 }kg. <br />
-                                Produksi terendah : {produksi_terkecil}kg.{" "}
+                                Produksi terendah : {
+                                    perhitungan.min_hasil
+                                }kg. <br />
                                 <br />
-                                <br />
-                                Luas Lahan : {perhitungan.luas_lahan}m
-                                <sup>2</sup>. <br />
+                                Luas Lahan : {perhitungan.luas_lahan} Ha. <br />
                                 Bibit : {perhitungan.bibit}kg. <br />
-                                pupuk : {perhitungan.pupuk}kg. <br />
+                                pupuk : {perhitungan.pupuk}ton. <br />
                                 <br />
                                 Derajat Luas Lahan Sempit :{" "}
-                                {perhitungan.derajat_lahan_terkecil}m
-                                <sup>2</sup>. <br />
+                                {perhitungan.derajat_lahan_terkecil}Ha <br />
                                 Derajat Luas Lahan Luas :{" "}
-                                {perhitungan.derajat_lahan_tertinggi}m
-                                <sup>2</sup>. <br />
+                                {perhitungan.derajat_lahan_tertinggi}Ha. <br />
                                 Derajat bibit sedikit :{" "}
-                                {perhitungan.derajat_bibit_terkecil}m
-                                <sup>2</sup>. <br />
+                                {perhitungan.derajat_bibit_terkecil} kg. <br />
                                 Derajat bibit banyak :{" "}
-                                {perhitungan.derajat_bibit_tertinggi}m
-                                <sup>2</sup>. <br />
+                                {perhitungan.derajat_bibit_tertinggi} kg. <br />
                                 Derajat pupuk sedikit :{" "}
-                                {perhitungan.derajat_pupuk_terkecil}m
-                                <sup>2</sup>. <br />
+                                {perhitungan.derajat_pupuk_terkecil} ton. <br />
                                 Derajat pupuk banyak :{" "}
-                                {perhitungan.derajat_pupuk_tertinggi}m
-                                <sup>2</sup>. <br /> <br />
+                                {perhitungan.derajat_pupuk_tertinggi} ton.{" "}
+                                <br /> <br />
                             </p>
                             <table className="table table-border">
                                 <thead>
@@ -239,7 +236,7 @@ export default function HistoryDetail({
                             <b>
                                 Hasil Perhitungan Fuzzy : {perhitungan.hasil}
                                 kg. (
-                                {perhitungan.hasil >= dataPanen.hasil_panen
+                                {perhitungan.hasil >= dataPanen[0]?.hasil_panen
                                     ? "Meningkat"
                                     : "Menurun"}
                                 )

@@ -146,63 +146,27 @@ export default function TambahDataPanen({ auth, desa, users }) {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="" className="form-label required">
-                                Luas Lahan
+                                Luas Lahan (Ha)
                             </label>
-                            <input
-                                required
-                                type="number"
-                                className="form-control"
-                                placeholder="Masukkan luas lahan..."
-                                defaultValue={data.luas_lahan}
-                                onChange={(e) =>
-                                    setData("luas_lahan", e.target.value)
-                                }
-                            />
+                            <div className="input-group">
+                                {/* Input field */}
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Masukkan luas lahan..."
+                                    defaultValue={data.luas_lahan}
+                                    onChange={(e) =>
+                                        setData("luas_lahan", e.target.value)
+                                    }
+                                />
+                            </div>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="" className="form-label required">
-                                Bibit
+                                Bibit (kg)
                             </label>
                             <div className="input-group">
                                 {/* Radio button 1 */}
-                                <div className="input-group-text">
-                                    <input
-                                        type="radio"
-                                        name="options"
-                                        defaultValue="option1"
-                                        aria-label="Radio for option 1"
-                                        onClick={() =>
-                                            setData("satuan_bibit", "ton")
-                                        }
-                                    />
-                                    <span className="ms-2">ton</span>
-                                </div>
-
-                                <div className="input-group-text">
-                                    <input
-                                        type="radio"
-                                        name="options"
-                                        defaultValue="option2"
-                                        aria-label="Radio for option 2"
-                                        onClick={() =>
-                                            setData("satuan_bibit", "kilogram")
-                                        }
-                                    />{" "}
-                                    <span className="ms-2">kilogram</span>
-                                </div>
-
-                                <div className="input-group-text">
-                                    <input
-                                        type="radio"
-                                        name="options"
-                                        defaultValue="option3"
-                                        aria-label="Radio for option 3"
-                                        onClick={() =>
-                                            setData("satuan_bibit", "gram")
-                                        }
-                                    />
-                                    <span className="ms-2">gram</span>
-                                </div>
 
                                 {/* Input field */}
                                 <input
@@ -219,49 +183,9 @@ export default function TambahDataPanen({ auth, desa, users }) {
 
                         <div className="mb-3">
                             <label htmlFor="" className="form-label required">
-                                Pupuk
+                                Pupuk (ton)
                             </label>
                             <div className="input-group">
-                                {/* Radio button 1 */}
-                                <div className="input-group-text">
-                                    <input
-                                        type="radio"
-                                        name="options"
-                                        defaultValue="option1"
-                                        aria-label="Radio for option 1"
-                                        onClick={() =>
-                                            setData("satuan_pupuk", "ton")
-                                        }
-                                    />
-                                    <span className="ms-2">ton</span>
-                                </div>
-
-                                <div className="input-group-text">
-                                    <input
-                                        type="radio"
-                                        name="options"
-                                        defaultValue="option2"
-                                        aria-label="Radio for option 2"
-                                        onClick={() =>
-                                            setData("satuan_pupuk", "kilogram")
-                                        }
-                                    />{" "}
-                                    <span className="ms-2">kilogram</span>
-                                </div>
-
-                                <div className="input-group-text">
-                                    <input
-                                        type="radio"
-                                        name="options"
-                                        defaultValue="option3"
-                                        aria-label="Radio for option 3"
-                                        onClick={() =>
-                                            setData("satuan_pupuk", "gram")
-                                        }
-                                    />
-                                    <span className="ms-2">gram</span>
-                                </div>
-
                                 {/* Input field */}
                                 <input
                                     type="text"
@@ -277,7 +201,7 @@ export default function TambahDataPanen({ auth, desa, users }) {
 
                         <div className="mb-3">
                             <label htmlFor="" className="form-label required">
-                                Hasil Panen (kilogram)
+                                Hasil Panen (kg)
                             </label>
                             <input
                                 type="number"
